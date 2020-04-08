@@ -26,8 +26,6 @@ net-snmp-devel libevent-devel libtool-ltdl-devel postgresql-devel bison make pkg
 dnf config-manager --set-enabled PowerTools
 dnf config-manager --set-enabled remi
 
-cd /etc/yum.repos.d && wget https://repo.codeit.guru/codeit.el`rpm -q --qf "%{VERSION}" $(rpm -q --whatprovides redhat-release)`.repo
-
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 
