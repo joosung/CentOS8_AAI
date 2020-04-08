@@ -13,7 +13,7 @@
 echo "
  =======================================================
 
-               < AAI 설치 하기>
+               < CentOS8_AAI 설치 하기>
 
  =======================================================
 "
@@ -30,31 +30,31 @@ fi
 echo""
 echo "설치를 시작 합니다."
 
-cd /root/AAI/APM
+cd /root/CentOS8_AAI/APM
 
 chmod 700 APMinstaller.sh
 
-chmod 700 /root/AAI/adduser.sh
+chmod 700 /root/CentOS8_AAI/adduser.sh
 
-chmod 700 /root/AAI/deluser.sh
+chmod 700 /root/CentOS8_AAI/deluser.sh
 
-chmod 700 /root/AAI/restart.sh
+chmod 700 /root/CentOS8_AAI/restart.sh
 
 sh APMinstaller.sh
 
-cd /root/AAI
+cd /root/CentOS8_AAI
 
 echo ""
 echo ""
-echo "AAI 설치 완료!"
+echo "CentOS8_AAI 설치 완료!"
 echo ""
 echo ""
 echo ""
 
 #설치 파일 삭제
-rm -rf /root/AAI/APM
+rm -rf /root/CentOS8_AAI/APM
 echo ""
-rm -rf /root/AAI/install.sh
+rm -rf /root/CentOS8_AAI/install.sh
 echo ""
 exit;
 

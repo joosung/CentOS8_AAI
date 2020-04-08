@@ -42,7 +42,7 @@ echo "gpgcheck=1" >> /etc/yum.repos.d/mariadb.repo
 
 yum -y update
 
-cd /root/AAI/APM
+cd /root/CentOS8_AAI/APM
 
 ##########################################
 #                                        #
@@ -79,7 +79,7 @@ yum -y install httpd-devel
 systemctl start httpd
 systemctl enable httpd
 
-cd /root/AAI
+cd /root/CentOS8_AAI
 wget https://dl.eff.org/certbot-auto
 mv certbot-auto /usr/local/bin/certbot-auto
 chown root /usr/local/bin/certbot-auto
@@ -118,8 +118,8 @@ sed -i 's/Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec/Options
 #sed -i 's/LoadModule mpm_prefork_module/#LoadModule mpm_prefork_modul/' /etc/httpd/conf.modules.d/00-mpm.conf
 #sed -i 's/#LoadModule mpm_event_module/LoadModule mpm_event_module/' /etc/httpd/conf.modules.d/00-mpm.conf
 
-cp /root/AAI/APM/index.html /var/www/html/
-#cp -f /root/AAI/APM/index.html /usr/share/httpd/noindex/
+cp /root/CentOS8_AAI/APM/index.html /var/www/html/
+#cp -f /root/CentOS8_AAI/APM/index.html /usr/share/httpd/noindex/
 
 echo "<VirtualHost *:80>
   DocumentRoot /var/www/html
@@ -175,13 +175,13 @@ mkdir /etc/skel/public_html
 
 chmod 707 /etc/skel/public_html
 
-chmod 700 /root/AAI/adduser.sh
+chmod 700 /root/CentOS8_AAI/adduser.sh
 
-chmod 700 /root/AAI/deluser.sh
+chmod 700 /root/CentOS8_AAI/deluser.sh
 
-chmod 700 /root/AAI/restart.sh
+chmod 700 /root/CentOS8_AAI/restart.sh
 
-cp /root/AAI/APM/skel/index.html /etc/skel/public_html/
+cp /root/CentOS8_AAI/APM/skel/index.html /etc/skel/public_html/
 
 systemctl restart httpd
 
@@ -231,7 +231,7 @@ systemctl start smartd
 #                                        #
 ##########################################
 
-cd /root/AAI/
+cd /root/CentOS8_AAI/
 
 #chkrootkit 설치
 wget ftp://ftp.pangeia.com.br/pub/seg/pac/chkrootkit.tar.gz 
@@ -244,7 +244,7 @@ cd chkrootkit
 
 make sense
 
-rm -rf /root/AAI/chkrootkit.tar.gz
+rm -rf /root/CentOS8_AAI/chkrootkit.tar.gz
 
 #mod_evasive mod_security fail2ban.noarch arpwatch 설치
 yum -y install  mod_security mod_security_crs fail2ban 
@@ -294,8 +294,8 @@ rm -f /tmp/httpd.conf_tempfile
 #                                        #
 ##########################################
 
-mv /root/AAI/APM/etc/cron.daily/backup /etc/cron.daily/
-mv /root/AAI/APM/etc/cron.daily/check_chkrootkit /etc/cron.daily/
+mv /root/CentOS8_AAI/APM/etc/cron.daily/backup /etc/cron.daily/
+mv /root/CentOS8_AAI/APM/etc/cron.daily/check_chkrootkit /etc/cron.daily/
 
 chmod 700 /etc/cron.daily/backup
 chmod 700 /etc/cron.daily/check_chkrootkit
@@ -309,9 +309,9 @@ echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random
 openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
 #중요 폴더 및 파일 링크
-ln -s /etc/httpd/conf.d /root/AAI/conf.d
-ln -s /etc/my.cnf /root/AAI/my.cnf
-ln -s /etc/php.ini /root/AAI/php.ini
+ln -s /etc/httpd/conf.d /root/CentOS8_AAI/conf.d
+ln -s /etc/my.cnf /root/CentOS8_AAI/my.cnf
+ln -s /etc/php.ini /root/CentOS8_AAI/php.ini
 
 service httpd restart
 
