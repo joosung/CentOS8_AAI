@@ -89,6 +89,9 @@ chmod 0755 /usr/local/bin/certbot-auto
 #                                        #
 ##########################################  
 
+systemctl start firewalld
+systemctl enable firewalld
+
 firewall-cmd --permanent --zone=public --add-service=http
 firewall-cmd --permanent --zone=public --add-service=https
 firewall-cmd --permanent --zone=public --add-port=3306/tcp
