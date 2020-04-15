@@ -29,7 +29,7 @@ dnf config-manager --set-enabled remi
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 
-yum install -y epel-release yum-utils
+dnf install -y epel-release yum-utils
 
 echo "[mariadb]" > /etc/yum.repos.d/mariadb.repo
 echo "name = MariaDB" >> /etc/yum.repos.d/mariadb.repo
