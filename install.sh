@@ -2,10 +2,10 @@
 
 #####################################################################################
 #                                                                                   #
-# * APMinstaller Beta v.0.3 with CentOS8                                            #
+# * APMinstaller AAI v.1 with CentOS8                                               #
 # * CentOS-8-x86_64-1911                                                            #
 # * Apache 2.4.X , MariaDB 10.4.X, PHP 7.2.X setup shell script                     #
-# * Created Date    : 2020/04/07                                                    #
+# * Created Date    : 2020/04/17                                                    #
 # * Created by  : Joo Sung ( webmaster@apachezone.com )                             #
 #                                                                                   #
 #####################################################################################

@@ -1,10 +1,12 @@
 #!/bin/bash
 
 ##########################################################
-# * adduser V 1.1                                        #
+#                                                        #
+# * adduser V 1.2                                        #
 # * APMinstaller v.1.0  전용                              #
-# * Created Date    : 2019/6/30                          #
-# * Created by  : Joo Sung ( webmaster@apachezone.com )  # 
+# * Created Date    : 2020/04/17                         #
+# * Created by  : Joo Sung ( webmaster@apachezone.com )  #
+#                                                        #
 ##########################################################
 
 echo "

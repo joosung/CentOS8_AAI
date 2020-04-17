@@ -72,6 +72,7 @@ mod_evasive
 mod_security
 mod_security_crs
 mod_expires
+clamav
 GeoIP
 cockpit
 사용지 계정 백업 스크립트 1.0.1

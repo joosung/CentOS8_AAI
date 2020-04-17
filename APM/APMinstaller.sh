@@ -2,10 +2,10 @@
  
 #####################################################################################
 #                                                                                   #
-# * APMinstaller Beta v.0.3 with CentOS8                                            #
+# * APMinstaller AAI v.1 with CentOS8                                               #
 # * CentOS-8-x86_64-1911                                                            #
 # * Apache 2.4.X , MariaDB 10.4.X, PHP 7.2.X setup shell script                     #
-# * Created Date    : 2020/04/07                                                    #
+# * Created Date    : 2020/04/17                                                    #
 # * Created by  : Joo Sung ( webmaster@apachezone.com )                             #
 #                                                                                   #
 #####################################################################################
@@ -180,6 +180,8 @@ chmod 700 /root/CentOS8_AAI/adduser.sh
 
 chmod 700 /root/CentOS8_AAI/deluser.sh
 
+chmod 700 /root/CentOS8_AAI/clamav.sh
+
 chmod 700 /root/CentOS8_AAI/restart.sh
 
 cp /root/CentOS8_AAI/APM/skel/index.html /etc/skel/public_html/
@@ -259,6 +261,63 @@ chkconfig --level 2345 fail2ban on
 sed -i 's,\(#filter = sshd-aggressive\),\1\nenabled = true,g;' /etc/fail2ban/jail.conf 
 
 
+#clamav 설치
+yum -y install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd
+
+cp /usr/share/doc/clamd/clamd.conf /etc/clamd.conf
+
+sed -i '/^Example/d' /etc/clamd.conf
+sed -i 's/User <USER>/User clamscan/' /etc/clamd.conf
+sed -i 's/#LocalSocket /LocalSocket /' /etc/clamd.conf
+sed -i 's/clamd.<SERVICE>/clamd.scan/' /etc/clamd.conf
+
+chmod 755 /var/run/clamd.scan
+
+sed 's/710/755/' /usr/lib/tmpfiles.d/clamd.scan.conf > /etc/tmpfiles.d/clamd.scan.conf
+cp /etc/freshclam.conf /etc/freshclam.conf.bak
+sed -i '/^Example/d' /etc/freshclam.conf
+
+echo "# Run the freshclam as daemon
+[Unit]
+Description = freshclam scanner
+After = network.target
+[Service]
+Type = forking
+ExecStart = /usr/bin/freshclam -d -c 4
+Restart = on-failure
+PrivateTmp = true
+[Install]
+WantedBy=multi-user.target" >> /usr/lib/systemd/system/clam-freshclam.service
+
+systemctl enable clam-freshclam.service
+systemctl start clam-freshclam.service
+mv /usr/lib/systemd/system/clamd\@.service /usr/lib/systemd/system/clamd.service
+rm -rf /usr/lib/systemd/system/clamd.service
+
+echo "[Unit]
+Description = clamd scanner daemon
+After = syslog.target nss-lookup.target network.target
+
+[Service]
+Type = simple
+ExecStart = /usr/sbin/clamd -c /etc/clamd.conf --foreground=yes
+Restart = on-failure
+PrivateTmp = true
+
+[Install]
+WantedBy=multi-user.target" >> /usr/lib/systemd/system/clamd.service
+
+sed -i '/^Example$/d' /etc/clamd.d/scan.conf
+sed -i -e 's/#LocalSocket \/var\/run\/clamd.scan\/clamd.sock/LocalSocket \/var\/run\/clamd.scan\/clamd.sock/g' /etc/clamd.d/scan.conf
+
+systemctl enable clamd.service
+
+systemctl start clamd.service
+
+systemctl stop clamd.service
+
+
+mkdir /virus
 mkdir /backup
 
 
@@ -301,9 +360,8 @@ mv /root/CentOS8_AAI/APM/etc/cron.daily/check_chkrootkit /etc/cron.daily/
 chmod 700 /etc/cron.daily/backup
 chmod 700 /etc/cron.daily/check_chkrootkit
 
-echo "00 20 * * * /root/check_chkrootkit" >> /etc/crontab
 echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && /usr/local/bin/certbot-auto renew" | sudo tee -a /etc/crontab > /dev/null
-
+echo "01 01 * * 7 /root/CentOS8_AAI/clamav.sh" >> /etc/crontab
 
 #openssl 로 디피-헬만 파라미터(dhparam) 키 만들기 둘중 하나 선택
 #openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
