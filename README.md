@@ -1,4 +1,4 @@
-AAI CentOS8 - APM AUTO INSTALL Beta V.0.3
+AAI CentOS8 - APM AUTO INSTALL V.1.0
 <pre>
 쉽고 빠른 설치, 운영, 업데이트까지 고려한 설계
 쉬운 업데이트 지원. (공식+인기 저장소를 사용하여 yum update 만으로 업데이트 완료)
